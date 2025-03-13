@@ -1,0 +1,22 @@
+---
+
+const { items } = Astro.props;
+
+---
+
+<div id="grid">
+
+<div id="bck"></div>
+
+<main>
+    {items.map((item,i) => (
+        <img 
+            data-index = {i}
+            data-description={item.content}
+            src={'https://cms.computomanzia.link/storage/'+item.image}
+        />
+    ))}
+
+</main>
+
+</div>

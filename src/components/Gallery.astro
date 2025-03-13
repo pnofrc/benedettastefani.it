@@ -1,0 +1,118 @@
+---
+
+const { items } = Astro.props;
+---
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+
+
+<div id="description"></div>
+
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+
+<div id="mainGallery" class="swiper">
+	<div class="swiper-wrapper">
+		{items.map(item => (
+              <div class="swiper-slide">
+              	<img 
+              		data-name={item.title}
+              		data-description={item.text}
+              		src={'https://cms.computomanzia.link/storage/'+item.image}
+              	/>
+                <p class="descriptionMobile">{item.title}<br>{item.text}</p>
+              </div>
+          ))}
+	</div>
+	
+</div>
+
+
+<script>
+   
+	import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs';
+
+    const items = document.querySelectorAll('#mainGallery img')
+    let randomInitialSlide = Math.floor(Math.random() * items.length)
+    let swiper
+    let dir = 'vertical'
+
+    function initSwiper() {
+       
+        let spv = window.matchMedia('(max-width: 1000px)').matches ? 1 : 2;
+        
+
+    
+        if (spv === 2) {
+            let segui = document.getElementById('description');
+            document.addEventListener('mousemove', function (e) {
+                segui.style.left = e.clientX + "px";
+                segui.style.top = e.clientY + "px";
+            });
+            dir = 'horizontal'
+        }
+
+
+        if (swiper) {
+            swiper.params.direction = dir;
+            swiper.params.slidesPerView = spv;
+            swiper.update()
+            return;
+        } else {
+            swiper = new Swiper('.swiper', {
+            slidesPerView: spv,
+            direction: dir,
+            loop: true,
+            initialSlide: randomInitialSlide,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+        }
+
+
+    if (spv === 2) {
+
+        document.querySelectorAll('.swiper-slide img').forEach((img) => {
+            img.addEventListener('mouseover', function () {
+                changeDescription( this.getAttribute('data-name'), this.getAttribute('data-description'));
+            });
+
+        });
+    }
+
+        const gridImages = document.querySelectorAll('main img');
+    
+        gridImages.forEach(img => {
+            img.addEventListener('click', (e)=> {
+                let index = e.target.getAttribute('data-index')
+                swiper.slideTo(index); 
+                grid.style.display = 'none'
+            });
+        });
+
+
+    }
+
+    function handleResize() {
+        initSwiper();
+    }
+
+    function changeDescription(name, description) {
+        document.getElementById('description').innerHTML = `<span>${name}</span><span>${description}</span>`;
+    }
+
+
+
+    if (typeof window !== 'undefined') {
+        window.addEventListener('load', initSwiper);
+        window.addEventListener('resize', handleResize);
+    }
+
+</script>
