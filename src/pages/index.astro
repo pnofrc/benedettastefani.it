@@ -207,6 +207,7 @@ a:hover{
     display:block;
     position: fixed;
     bottom: 0;
+    width: 100%;
     margin:0;
     padding-bottom: 3px;
 }
@@ -268,7 +269,7 @@ a:hover{
 setTimeout(() => {
 document.getElementById('totalRed')?.classList.toggle('fade');
 
-}, 1000);
+}, 300);
 
 setTimeout(() => {
 document.getElementById('totalRed').style.display = "none"
@@ -282,6 +283,7 @@ var grid = document.getElementById("grid")
 document.getElementById('burger')?.addEventListener("click", () =>{
     info.style.display = ((info.style.display!='block') ? 'block' : 'none');
 	info2.style.display = info.style.display
+    
     document.querySelectorAll('.descriptionMobile').forEach(desc => {
         desc.style.display = ((info.style.display!='none') ? 'none' : 'block');
     });

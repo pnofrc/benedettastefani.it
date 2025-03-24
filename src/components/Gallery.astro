@@ -61,6 +61,18 @@ const { items } = Astro.props;
     if (!isMobile) {
       setupHoverEffect();
     }
+
+    const gridImages = document.querySelectorAll('main img');
+    
+        gridImages.forEach(img => {
+            img.addEventListener('click', (e)=> {
+                let index = e.target.getAttribute('data-index')
+                swiper.slideTo(index); 
+                grid.style.display = 'none'
+            });
+        });
+
+        
   }
 
   function setupHoverEffect() {
