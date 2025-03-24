@@ -1,15 +1,11 @@
 ---
-
 const { items } = Astro.props;
 ---
-
 
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
 />
-
-
 
 <div id="description"></div>
 
@@ -17,102 +13,77 @@ const { items } = Astro.props;
 <div class="swiper-button-next"></div>
 
 <div id="mainGallery" class="swiper">
-	<div class="swiper-wrapper">
-		{items.map(item => (
-              <div class="swiper-slide">
-              	<img 
-              		data-name={item.title}
-              		data-description={item.text}
-              		src={'https://cms.computomanzia.link/storage/'+item.image}
-              	/>
-                <p class="descriptionMobile">{item.title}<br>{item.text}</p>
-              </div>
-          ))}
-	</div>
-	
+  <div class="swiper-wrapper">
+    {items.map((item, index) => (
+      <div class="swiper-slide">
+        <img 
+          loading="lazy"
+          data-name={item.title}
+          data-description={item.text}
+          data-index={index}
+          src={'https://cms.computomanzia.link/storage/'+item.image}
+        />
+        <p class="descriptionMobile">{item.title}<br>{item.text}</p>
+      </div>
+    ))}
+  </div>
 </div>
 
-
 <script>
-   
-	import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs';
+  import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs';
 
-    const items = document.querySelectorAll('#mainGallery img')
-    let randomInitialSlide = Math.floor(Math.random() * items.length)
-    let swiper
-    let dir = 'vertical'
+  let swiper;
+  let isMobile = window.innerWidth <= 1000;
 
-    function initSwiper() {
-       
-        let spv = window.matchMedia('(max-width: 1000px)').matches ? 1 : 2;
-        
-
+  function initSwiper() {
+    let newIsMobile = window.innerWidth <= 1000;
     
-        if (spv === 2) {
-            let segui = document.getElementById('description');
-            document.addEventListener('mousemove', function (e) {
-                segui.style.left = e.clientX + "px";
-                segui.style.top = e.clientY + "px";
-            });
-            dir = 'horizontal'
-        }
-
-
-        if (swiper) {
-            swiper.params.direction = dir;
-            swiper.params.slidesPerView = spv;
-            swiper.update()
-            return;
-        } else {
-            swiper = new Swiper('.swiper', {
-            slidesPerView: spv,
-            direction: dir,
-            loop: true,
-            initialSlide: randomInitialSlide,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
-        }
-
-
-    if (spv === 2) {
-
-        document.querySelectorAll('.swiper-slide img').forEach((img) => {
-            img.addEventListener('mouseover', function () {
-                changeDescription( this.getAttribute('data-name'), this.getAttribute('data-description'));
-            });
-
-        });
+    if (newIsMobile !== isMobile) {
+      if (swiper) {
+        swiper.destroy(true, true);
+        swiper = null;
+      }
+      isMobile = newIsMobile;
     }
 
-        const gridImages = document.querySelectorAll('main img');
-    
-        gridImages.forEach(img => {
-            img.addEventListener('click', (e)=> {
-                let index = e.target.getAttribute('data-index')
-                swiper.slideTo(index); 
-                grid.style.display = 'none'
-            });
-        });
-
-
+    if (!swiper) {
+      swiper = new Swiper('.swiper', {
+        slidesPerView: isMobile ? 1 : 2,
+        direction: isMobile ? 'vertical' : 'horizontal',
+        loop: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
     }
 
-    function handleResize() {
-        initSwiper();
+    if (!isMobile) {
+      setupHoverEffect();
     }
+  }
 
-    function changeDescription(name, description) {
-        document.getElementById('description').innerHTML = `<span>${name}</span><span>${description}</span>`;
-    }
+  function setupHoverEffect() {
+    const description = document.getElementById('description');
 
+    document.addEventListener('mousemove', (e) => {
+      description.style.left = `${e.clientX}px`;
+      description.style.top = `${e.clientY}px`;
+    });
 
+    document.querySelectorAll('.swiper-slide img').forEach((img) => {
+      img.addEventListener('mouseover', function () {
+        description.innerHTML = `<span>${this.getAttribute('data-name')}</span><span>${this.getAttribute('data-description')}</span>`;
+      });
+    });
+  }
 
-    if (typeof window !== 'undefined') {
-        window.addEventListener('load', initSwiper);
-        window.addEventListener('resize', handleResize);
-    }
+  function handleResize() {
+    initSwiper();
+  }
 
+  if (typeof window !== 'undefined') {
+    window.addEventListener('load', initSwiper);
+    window.addEventListener('resize', handleResize);
+  }
 </script>

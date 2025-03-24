@@ -19,7 +19,7 @@ const items = data[0].items
 
 	<div id="info">
         <p>for inquires</p>
-        <p><a href="mailto:benedetta.stefanife@gmail.com">m benedetta.stefanife@gmail.com</a></p>
+        <p><a href="mailto:ciao@benedettastefani.it">m ciao@benedettastefani.it</a></p>
         <p><a href="https://www.instagram.com/stefani.maledetta/" target="_blank">i @stefani.maledetta</a></p>
     </div>
 
@@ -60,6 +60,7 @@ img{
 
 #info,#info2{
     display: none;
+    z-index: 10000 !important;
 }
 
 #info p,#info2 p{
@@ -103,7 +104,9 @@ a:hover{
 }
 
 #grid{
-	display: none
+	display: none;
+    position: absolute;
+    top: 0;
 }
 
 .swiper-slide{
@@ -220,22 +223,21 @@ a:hover{
 }
 
 
-// GRID
-
 #bck{
         width: 100vw;
-        height: 1.5rem;
-        background: main;
+        height: 5rem;
+        background: var(--main);
         position: absolute;
         top:0
     }
     main{
         position: absolute;
-        top: 1.5rem;
+        top: 1.4rem;
         z-index: 1000;
         width: 100vw;
+        overflow-y: scroll;
         gap: 0;
-        height: auto;
+        height: 100vh;
         display: grid;
         row-gap: 0;
         grid-template-columns: auto auto auto auto auto auto auto;
@@ -248,7 +250,7 @@ a:hover{
 
     @media screen and (max-width: 1000px) {
         main{
-            grid-template-columns: auto auto auto auto
+            grid-template-columns: 20% 20% 20% 20% 20%
         
         }
 
