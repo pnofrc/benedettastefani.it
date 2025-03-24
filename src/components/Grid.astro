@@ -11,6 +11,7 @@ const { items } = Astro.props;
 <main>
     {items.map((item,i) => (
         <img 
+        loading="lazy"
             data-index = {i}
             data-description={item.content}
             src={'https://cms.computomanzia.link/storage/'+item.image}
