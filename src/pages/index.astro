@@ -20,7 +20,7 @@ const items = data[0].items
 	<div id="info">
         <p>for inquires</p>
         <p><a href="mailto:ciao@benedettastefani.it">m ciao@benedettastefani.it</a></p>
-        <p><a href="https://www.instagram.com/stefani.maledetta/" target="_blank">i @stefani.maledetta</a></p>
+        <p><a href="https://www.instagram.com/maledetta.stefani" target="_blank">i @maledetta.stefani</a></p>
     </div>
 
 	<p id="info2">developed with <a target="_blank" href="http://federicoponi.it">Federico Poni, 2025</a></p>
@@ -172,10 +172,11 @@ a:hover{
 
 .swiper-button-prev::after,.swiper-button-next::after  {
     color: transparent;
-    min-width: 50px !important;
-    min-height: 50px !important;
+    min-width: 55px !important;
+    max-height:30px !important;
     background-color: var(--main);
     background-repeat: no-repeat;
+    background-size: 85%;
     background-position: center;
     display: flex !important; 
     justify-content: center;
@@ -183,11 +184,11 @@ a:hover{
   }
 
 .swiper-button-prev::after {
-    background-image: url("fr-sx.svg") !important;
+    background-image: url("fr-sx.png") !important;
   }
   
   .swiper-button-next::after {
-    background-image: url("fr-dx.svg") !important;
+    background-image: url("fr-dx.png") !important;
   }
 
 
@@ -211,7 +212,8 @@ a:hover{
     bottom: 0;
     width: 100%;
     margin:0;
-    padding-bottom: 3px;
+    padding: 3px 0px;
+    line-height: 80%;
 }
 
 #description span{
@@ -229,9 +231,9 @@ a:hover{
 
 #bck{
         width: 100vw;
-        height: 5rem;
+        height: 100vh;
         background: var(--main);
-        position: absolute;
+        position: fixed;
         top:0
     }
     main{
@@ -241,8 +243,9 @@ a:hover{
         width: 100vw;
         overflow-y: scroll;
         gap: 0;
-        height: 100vh;
+        height: 97.5vh;
         display: grid;
+        
         row-gap: 0;
         grid-template-columns: auto auto auto auto auto auto auto;
     }
@@ -254,7 +257,7 @@ a:hover{
 
     @media screen and (max-width: 1000px) {
         main{
-            grid-template-columns: 20% 20% 20% 20% 20%
+            grid-template-columns: auto auto auto auto
         
         }
 
