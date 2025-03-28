@@ -35,6 +35,9 @@ const { items } = Astro.props;
   let swiper;
   let isMobile = window.innerWidth <= 1000;
 
+  const items = document.querySelectorAll('#mainGallery img')
+  let randomInitialSlide = Math.floor(Math.random() * items.length)
+
   function initSwiper() {
     let newIsMobile = window.innerWidth <= 1000;
     
@@ -50,6 +53,7 @@ const { items } = Astro.props;
       swiper = new Swiper('.swiper', {
         slidesPerView: isMobile ? 1 : 2,
         direction: isMobile ? 'vertical' : 'horizontal',
+        initialSlide: randomInitialSlide,
         loop: true,
         navigation: {
           nextEl: '.swiper-button-next',
