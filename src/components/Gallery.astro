@@ -67,7 +67,7 @@ const { items } = Astro.props;
         gridImages.forEach(img => {
             img.addEventListener('click', (e)=> {
                 let index = e.target.getAttribute('data-index')
-                swiper.slideTo(index); 
+                swiper.slideToLoop(index); 
                 grid.style.display = 'none'
             });
         });
